@@ -55,9 +55,7 @@ Thumbs.db
 *.numbers
 *.pkl
 *.json
-
-# ipython checkpoints #
-#######################
 __pycache__
 .ipynb_checkpoints
+.gitignore
 
