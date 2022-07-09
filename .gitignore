@@ -56,4 +56,5 @@ Thumbs.db
 *.pkl
 *.json
 .ipynb_checkpoints
+.gitignore
 
