@@ -1,6 +1,9 @@
 # Uncalibrated MVMP 3D Pose
 
-This is the official implementation of our paper **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.  If you find our work useful to you, please consider cite:
+This is the official implementation of our paper **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.
+
+If you think our work useful to your research, please consider cite:
+
 
 ## Configure Environment
 
