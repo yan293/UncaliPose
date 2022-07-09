@@ -4,6 +4,14 @@ This is the official implementation of our paper **"Multi-View Multi-Person 3D P
 
 If you think our work useful to your research, please consider cite:
 
+	```
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+}
+```
+
 
 ## Configure Environment
 
