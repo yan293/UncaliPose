@@ -25,7 +25,7 @@ import os
 
 class Panoptic(object):
     
-    def __init__(self, data_dir):
+    def __init__(self, data_dir, config=None):
         if data_dir[-1] == '/': data_dir = data_dir[:-1]
         self.data_dir = data_dir
         self.data_name = data_dir.split('/')[-1]
@@ -42,6 +42,8 @@ class Panoptic(object):
         self.joints_ids = np.arange(15)  # COCO 19 w/o face
         self.body_edges = np.array([[0,1],[0,3],[3,4],[4,5],[0,2],[2,6],[6,7],
             [7,8],[2,12],[12,13],[13,14],[0,9],[9,10],[10,11]])
+        
+        self.config = config
 
     def _loadCalibrationParameters(self):
         calib = json.load(open(self.calibration_file, 'r'))
@@ -156,19 +158,24 @@ class Panoptic(object):
             joints_dict[camera_name] = frame_joints_dict
         return joints_dict
     
-    def getSingleFrameMultiViewBoxes(self, frame_id,
-                                      box_joints_margin=1.2,
-                                      box_ios_thold=0.7,
-                                      box_size_thold=(20, 20),
-                                      joints_inside_img_ratio=0.6,
-                                      box_inside_img_ratio=0.6,
-                                      img_postfix='.jpg',
-                                      verbose=True,
-                                      resize=(128, 256),
-                                      replace_old=False):
+    def getSingleFrameMultiViewBoxes(
+            self, frame_id, box_joints_margin=1.2, box_ios_thold=0.7,
+            box_size_thold=(20, 20), joints_inside_img_ratio=0.6,
+            box_inside_img_ratio=0.6, resize=(128, 256), verbose=False,
+            replace_old=False, img_postfix='.jpg'):
         '''
         Crop the bounding boxes from myltiple views for a video frame.
         '''
+        if self.config is not None:
+            box_config = self.config['boxprocessing']
+            joints_inside_img_ratio = box_config['joints_inside_img_ratio']
+            box_inside_img_ratio = box_config['box_inside_img_ratio']
+            box_joints_margin = box_config['box_joints_margin']
+            box_size_thold = box_config['box_size_thold']
+            box_ios_thold = box_config['box_ios_thold']
+            replace_old = box_config['replace_old']
+            resize = box_config['resize']
+            
         time_start = time.time()
         save_crop_dir = os.path.join(
             self.boxcrop_dir, 'frame' + str(frame_id).zfill(8))
@@ -245,12 +252,17 @@ class Panoptic(object):
         return save_crop_dir
     
     def getFrameReIDFeat(
-            self, frame_id, num_prev_frames=0, reid_model=None,
-            trking_method='person_id', trk_feat_method='mean',
-        reid_log_file=None):
+            self, frame_id, num_prev_frames=0, trking_method='person_id',
+            trk_feat_method='mean', reid_model=None, reid_log_file=None):
         '''
         Get the bounding box ReID features of a given frame.
         '''
+        if self.config is not None:
+            reid_config = self.config['reid']
+            num_prev_frames = reid_config['num_prev_frames']
+            trk_feat_method = reid_config['trk_feat_method']
+            trking_method = reid_config['trking_method']
+            
         # --- current frame reid feature
         frame_box_dir = os.path.join(
             self.boxcrop_dir,'frame'+str(frame_id).zfill(8))
@@ -287,11 +299,15 @@ class Panoptic(object):
         return reid_feat
             
     
-    def genPtsCorrepFromBoxClus(self, boxfile_clusters, frame_id=None,
-                                verbose=True, noise_sz=None):
+    def genPtsCorrepFromBoxClus(
+            self,boxfile_clusters,frame_id=None,noise_sz=None,verbose=False):
         '''
         Get 2D-2D point correspondences from box crop files clusters.
         '''
+        if self.config is not None:
+            correp_config = self.config['correspondence']
+            noise_sz = correp_config['noise_sz']
+            
         if verbose:
             print("\nGet 2D-2D correspondences:\n====================")
             

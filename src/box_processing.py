@@ -41,9 +41,6 @@ def countNumJointsInsideImage(im_size, joints):
         if x_inside and y_inside:
             count += 1
             joints_vis[:, i] = joints[:, i]
-        ##### FOR DEBUG #####
-        # joints_vis[:, i] = joints[:, i]
-        #####################
     return count, float(count) / float(total), joints_vis
 
 
@@ -91,13 +88,6 @@ def cutBoxAroundJoints(im_size, joints, margin_ratio=1.1):
     area_in = (x_br - x_tl) * (y_br - y_tl)
     box_in_img_ratio = float(area_in) / area
     return (x_tl, y_tl, x_br, y_br, joints_in_img_ratio, box_in_img_ratio)
-
-
-def sortJointsByDistance(joints_list):
-    '''
-    Sort the joints by their distances to the camera.
-    '''
-    return None
 
 
 def intersectionOverSelf(box1, box2):
@@ -272,10 +262,14 @@ def cropBoxesInImage(image_file, boxes, save_dir=None,
             save_files.append(save_file)
     return box_crops, save_files
 
+
 def extractBoxReIDFeature(boxcrop_dir, reid_model=None, log_file=None):
     '''
     Extract re-ID feature of the bounding boxes.
     '''
+    import os, sys
+    CURRENT_DIR = '/'.join(os.path.abspath(__file__).split('/')[:-1])
+    sys.path.append(CURRENT_DIR)
     import subprocess
     
     box_file_list = getFilesOfType(boxcrop_dir, type_list=['*.jpg', '*.png'])
@@ -285,7 +279,7 @@ def extractBoxReIDFeature(boxcrop_dir, reid_model=None, log_file=None):
         boxcrop_dir))
     
     if reid_model is None:
-        reid_model = 'src/reid_strong_baseline/pretrained/'\
+        reid_model = 'src/reid_strong_baseline/FOR_SSC/pretrained_models/'\
             'market_resnet50_model_120_rank1_945.pth'
     if log_file is not None:
         stdout = open(log_file, 'w')

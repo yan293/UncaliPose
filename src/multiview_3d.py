@@ -304,6 +304,10 @@ def triangulateFromAllCamPairs(
             M1 = np.concatenate([np.eye(3), np.zeros((3,1))], axis=1)
             M2 = M2_dict['M_'+str(i2)+'_'+str(i1)]
             
+            pts1, pts2, _, _ = twov3d.countCovisiblePoints(pt_l[i1], pt_l[i2])
+            if len(pts1) == 0:
+                continue
+            
             Pts = twov3d.triangulatePoints(
                 cam_l[i1]['K'], cam_l[i1]['distCoef'], M1,
                 cam_l[i2]['K'], cam_l[i2]['distCoef'], M2,
@@ -316,6 +320,19 @@ def triangulateFromAllCamPairs(
             Pts_all_cam_pairs.append(Pts)
 
     return Pts_all_cam_pairs
+
+
+def preparePoseEstData(pt_corresp_dict, cam_param_dict, n_person):
+    '''
+    Prepare data for 3D pose estimation.
+    '''
+    pt_corresp_list, cam_param_list, cam_names = [], [], []
+    for cam_name in sorted(list(pt_corresp_dict.keys())):
+        pt_corresp_list.append(pt_corresp_dict[cam_name]['keypoints'])
+        cam_param_list.append(cam_param_dict[cam_name])
+        cam_names.append(cam_name)
+    n_joints = len(pt_corresp_list[0]) // n_person
+    return pt_corresp_list, cam_param_list, cam_names, n_joints
 
 
 def prepareBundleAdjustmentData(
@@ -351,19 +368,6 @@ def prepareBundleAdjustmentData(
     return BA_input
 
 
-def preparePoseEstData(pt_corresp_dict, cam_param_dict, n_person):
-    '''
-    Prepare data for 3D pose estimation.
-    '''
-    pt_corresp_list, cam_param_list, cam_names = [], [], []
-    for cam_name in sorted(list(pt_corresp_dict.keys())):
-        pt_corresp_list.append(pt_corresp_dict[cam_name]['keypoints'])
-        cam_param_list.append(cam_param_dict[cam_name])
-        cam_names.append(cam_name)
-    n_joints = len(pt_corresp_list[0]) // n_person
-    return pt_corresp_list, cam_param_list, cam_names, n_joints
-
-
 def solveMultiView3DHumanPoses(
         pt_corresp_dict, cam_param_dict, n_person, wrld_cam_id=None,
         M2_angle_thold=15, Pts_prev=None, verbose=True):
@@ -394,5 +398,9 @@ def solveMultiView3DHumanPoses(
     # Step 5: Prepare data for Bundle Adjustment
     BA_input = prepareBundleAdjustmentData(
         Pts, pt_corresp_list, cam_param_list, M2_dict, wrld_cam_id)
+    
+    if verbose:
+        print("Done.\nRef cam id:{}, name:{}\n====================\n".format(
+            wrld_cam_id, cam_names[wrld_cam_id]))
 
     return Pts, BA_input, cam_names[wrld_cam_id]

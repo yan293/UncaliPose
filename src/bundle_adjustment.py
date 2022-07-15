@@ -107,49 +107,6 @@ def rodriguesResidual(
     return residuals
 
 
-# def rodriguesResidualTime(K1, D1, M1, p1, K2s, D2s, M2s, p2s, x,
-#                           P_prev, alpha=1, fix_cam_pose=False):
-#     '''
-#     Rodrigues residual.
-    
-#     Input:
-#         K1, [3x3], the intrinsic matrix of camera 1 (reference camera).
-#         D1, [1x5], the distortion parameters of camera 1.
-#         M1, [3x4], the extrinsic matrix of camera 1.
-#         p1, [Nx2], 2D points observed from camera 1, (np.nan if invisible).
-#         K2s, [[3x3], ...], a list of intrinsic matrixs of camera 2s.
-#         D2s, [[1x5], ...], a list of distortion parameters of camera 2s.
-#         p2s, [[Nx2], ...], a list of extrinsic matrix of camera 2s.
-#         x, the flattened concatenation of r2s, t2s, and P (3D points).
-#     Output:
-#         residuals, 2D reprojection residual.
-#     '''
-#     n_Pts = len(p1)
-#     if fix_cam_pose:
-#         P = x.reshape((-1, 3))
-#     else:
-#         M2s, P = variableToParams(x, M2s, n_Pts, fix_cam_pose=fix_cam_pose)
-    
-#     # --- part 1: reprojection error residual
-#     vis1 = visiblePtsIndex(p1)
-#     p1_ = b3dop.projectPoints(P[vis1].T, K1, D1, M1[:, :3], M1[:, 3])
-#     reproj_err = [p1_.T - p1[vis1]]
-    
-#     for i in range(len(K2s)):
-#         R2, t2 = M2s[i][:, :3], M2s[i][:, 3]
-#         vis2 = visiblePtsIndex(p2s[i])
-#         p2_ = b3dop.projectPoints(P[vis2].T, K2s[i], D2s[i], R2, t2)
-#         reproj_err.append(p2_.T - p2s[i][vis2])
-        
-#     residual_reproj = np.concatenate(reproj_err, axis=0).ravel(order='C')
-    
-#     # --- part 2: time-consistency residual
-#     residual_time = alpha * K1[0,0] * K1[0,0] * (P - P_prev).ravel(order='C')
-    
-#     residuals = np.concatenate((residual_reproj, residual_time))
-#     return residuals
-
-
 def jacobianSparsity(pts_list, fix_cam_pose=False):
     '''
     Construct a sparse Jocobian matrix.
@@ -219,15 +176,9 @@ def bundleAdjustment(K1, D1, M1, p1, K2s, D2s, M2s, p2s, Pts, Pts_prev=None,
     p1_ = p1[vis_ids]
     p2s_ = [p2[vis_ids] for p2 in p2s]
 
-    if Pts_prev is None:
-        func = lambda x: rodriguesResidual(
-            K1, D1, M1, p1_, K2s, D2s, M2s, p2s_, x,fix_cam_pose=fix_cam_pose)
-        jac_spars = jacobianSparsity([p1_]+list(p2s_),fix_cam_pose=fix_cam_pose)
-    else:
-        func = lambda x: rodriguesResidualTime(
-            K1, D1, M1, p1_, K2s, D2s, M2s, p2s_, x, Pts_prev, alpha=alpha,
-            fix_cam_pose=fix_cam_pose)
-        jac_spars = None
+    func = lambda x: rodriguesResidual(
+        K1, D1, M1, p1_, K2s, D2s, M2s, p2s_, x,fix_cam_pose=fix_cam_pose)
+    jac_spars = jacobianSparsity([p1_]+list(p2s_),fix_cam_pose=fix_cam_pose)
     
     x_init = paramsToVariable(M2s, Pts_, fix_cam_pose=fix_cam_pose)
     res = sciopt.least_squares(
@@ -251,7 +202,7 @@ def bundleAdjustment(K1, D1, M1, p1, K2s, D2s, M2s, p2s, Pts, Pts_prev=None,
             'world_camera_id': wrld_cam_id}
         json.dump(save_data, open(os.path.join(save_dir,'pose_est.json'),'w'))
     if verbose:
-        print("====================\n")
+        print("\nDone.\n====================\n")
     return M2s_BA, Pts_BA
 
 

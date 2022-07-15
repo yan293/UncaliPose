@@ -1,7 +1,7 @@
 MODEL:
   # PRETRAIN_CHOICE: 'imagenet'
   PRETRAIN_CHOICE: 'self'
-  PRETRAIN_PATH: '/home/yan/experiments/3d_human_pose_estimation/reid-strong-baseline/pretrained/market_resnet50_model_120_rank1_945.pth'
+  PRETRAIN_PATH: '/home/yan/_WildTrack/src/reid_strong_baseline/FOR_SSC/pretrained_models/market_resnet50_model_120_rank1_945.pth'
   METRIC_LOSS_TYPE: 'triplet_center'
   IF_LABELSMOOTH: 'on'
   IF_WITH_CENTER: 'yes'
@@ -60,9 +60,9 @@ SOLVER:
 TEST:
   IMS_PER_BATCH: 128
   RE_RANKING: 'no'
-  WEIGHT: "/home/yan/auto_3d_human_pose/src/reid_strong_baseline/pretrained/market_resnet50_model_120_rank1_945.pth"
+  WEIGHT: "/home/yan/_WildTrack/src/reid_strong_baseline/FOR_SSC/pretrained_models/market_resnet50_model_120_rank1_945.pth"
   NECK_FEAT: 'after'
   FEAT_NORM: 'no'
-  IMG_DIR: "/home/yan/auto_3d_human_pose/data/panoptic/160422_ultimatum1/boxCrops/frame5000"
+  IMG_DIR: ""
 
-OUTPUT_DIR: "/home/yan/0_WildTrack/src/reid_strong_baseline/output"
+OUTPUT_DIR: "/home/yan/_WildTrack/src/reid_strong_baseline/FOR_SSC/output"

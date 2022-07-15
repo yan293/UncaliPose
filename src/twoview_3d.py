@@ -59,60 +59,6 @@ def triangulatePoints(K1, D1, M1, K2, D2, M2, pts1, pts2):
     return Pts
 
 
-# def estEssentialMatrix(F, K1, K2):
-#     '''
-#     Compute the essential matrix E, given fundamental matrix F and camera intrinsics K1 and K2.
-#         Input:  F, fundamental matrix
-#                 K1, internal camera calibration matrix of camera 1
-#                 K2, internal camera calibration matrix of camera 2
-#         Output: E, the essential matrix
-#     '''
-#     E = K2.T.dot(F).dot(K1)
-#     return E
-
-
-# def solveMsFromEssenMatOpenCV(E):
-#     '''
-#     Estimate extrinsic matrix of camera 2 from essential matrix,
-#     return all the mathematically possible solutions.
-#     '''
-#     R1, R2, t = cv2.decomposeEssentialMat(E)
-#     M2s = np.zeros([3, 4, 4]).astype('float32')
-#     M2s[:,:,0] = np.concatenate([R1, t], axis=1)
-#     M2s[:,:,1] = np.concatenate([R1, -t], axis=1)
-#     M2s[:,:,2] = np.concatenate([R2, t], axis=1)
-#     M2s[:,:,3] = np.concatenate([R2, -t], axis=1)
-#     return M2s
-
-
-# def solveBestM2OpenCV(pts1, pts2, F, K1, D1, K2, D2):
-
-#     # CALCULATE E
-#     E = estEssentialMatrix(F, K1, K2)
-
-#     # CALCULATE M1 and M2
-#     M1 = np.array([[1., 0., 0., 0.],
-#                    [0., 1., 0., 0.],
-#                    [0., 0., 1., 0.]])
-#     M2_list = solveMsFromEssenMatOpenCV(E)
-
-#     # TRIANGULATION
-#     P_best = np.zeros((pts1.shape[0], 3))
-#     M2_best = np.zeros((3,4))
-
-#     z_front =  -np.inf
-#     for i in range(M2_list.shape[2]):
-#         M2 = M2_list[:, :, i]
-#         P_i = triangulatePoints(K1, D1, M1, K2, D2, M2, pts1, pts2)
-#         z_list = P_i[:, 2]
-
-#         # pick the solution making the most #points in front of the cameras
-#         if z_front < (z_list > 0).sum():
-#             z_front = (z_list > 0).sum()
-#             P_best, M2_best = P_i, M2
-#     return P_best, M2_best
-
-
 def estRelativeCamPose(pts1, pts2, K1, D1, K2, D2):
     '''
     Estimate the relative camera pose from 2D correspondences.

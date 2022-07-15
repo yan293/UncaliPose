@@ -83,12 +83,21 @@ def main():
     if cfg.MODEL.DEVICE == "cuda":
         os.environ['CUDA_VISIBLE_DEVICES'] = cfg.MODEL.DEVICE_ID
     cudnn.benchmark = True
+    
+    print('????????????????????????')
 
-    train_loader, val_loader, num_query, num_classes = make_data_loader(cfg)
+    # train_loader, val_loader, num_query, num_classes = make_data_loader(cfg)
+    num_classes = 751
+    
+    print('+++++++++++++++++++++++++')
     model = build_model(cfg, num_classes)
+    
+    print('-------------------------')
     model.load_param(cfg.TEST.WEIGHT)
     
-    # ======================= FOR WILDPOSE ======================= #
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!')
+    
+    # ======================= FOR SSC ======================= #
     model.eval()
     
     feats = {}

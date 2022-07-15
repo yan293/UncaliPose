@@ -117,10 +117,16 @@ def rmvZeroAndOneClusters(boxfile_clusters):
 def multiViewHumanBoxesClustering(
         box_feat_dict, n_persons=None, method='kmeans_ssc', dist='cosine',
         size_min=2, size_max=None, n_init=100, eval_clust=True, verbose=True,
-        gt_person_id=True, compare_clust_methods=False, save=False):
+        gt_person_id=True,compare_clust_methods=False,save=False,config=None):
     '''
     Cluster multi-view human bounding boxes using ReID feature.
     '''
+    if config is not None:
+        compare_clust_methods = config['compare_clust_methods']
+        verbose = config['verbose']
+        method = config['method']
+        n_init = config['n_init']
+    
     boxfeats, boxfiles, person_ids, mustlinks, cannotlinks = \
         prepareClusteringData(box_feat_dict)
     
@@ -141,12 +147,6 @@ def multiViewHumanBoxesClustering(
         n_init=n_init, size_min=size_min, size_max=size_max, verbose=verbose,
         mustlinks=mustlinks, cannotlinks=cannotlinks, label_true=person_ids)
     cluster_label = clustering_result[method][dist]['cluster_labels']
-    
-    # clustering_result = perform1DClustering(
-    #     boxfeats, n_persons, method=method, dist=dist, n_init=n_init,
-    #     size_min=size_min, size_max=size_max, mustlinks=mustlinks,
-    #     cannotlinks=cannotlinks, verbose=verbose)
-    # cluster_label = clustering_result['cluster_labels']
     
     boxfile_clusters = getBoxfileClusters(
         cluster_label, boxfiles, gt_person_id=gt_person_id)

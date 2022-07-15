@@ -18,12 +18,6 @@ import os
 COLORS = ['r', 'g', 'b', 'y', 'm', 'c', 'lime', 'tab:blue', 'tab:orange',
           'tab:green', 'tab:red', 'tab:purple', 'tab:brown',
           'tab:pink', 'tab:gray', 'tab:olive', 'tab:cyan']
-# COLORS = ['b', 'b', 'b', 'b', 'b']
-# COLORS = ['y', 'y', 'y', 'y', 'y']
-# COLORS = ['r', 'r', 'r', 'r', 'r']
-# COLORS = ['c', 'c', 'c', 'c', 'c']
-# COLORS = ['lime', 'lime', 'lime', 'lime', 'lime']
-# COLORS = plt.cm.hsv(np.linspace(0, 1, 5))
 
 
 # ------------------------- plot 2D ------------------------- #

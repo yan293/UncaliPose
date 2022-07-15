@@ -1,0 +1,46 @@
+
+# bounding box cropping parameters
+boxprocessing:
+    box_joints_margin: [1.0, 1.1]
+    box_size_thold: [10, 10]
+    box_ios_thold: 0.3
+    joints_inside_img_ratio: 0.6
+    box_inside_img_ratio: 0.6
+    resize: [128, 256]
+    replace_old: False
+    verbose: True
+
+
+# ReID feature parameters
+reid:
+    num_prev_frames: 10
+    trking_method: 'person_id'
+    trk_feat_method: 'max_with_sign_voting'
+
+
+# Point correspondence parameters
+correspondence:
+    noise_sz: 0
+    verbose: False
+
+
+# # Clustering parameters
+# clustering:
+#     method: 'kmeans_ssc'
+#     n_init: 50
+#     compare_clust_methods: False
+#     verbose: True
+
+    
+# # Multi-view parameters
+# multiview:
+#     wrld_cam_id: 0
+#     verbose: False
+#     M2_angle_thold: 15
+
+    
+# # Bundle adjustment paramters
+# bundle:
+#     max_iter: 100
+#     fix_cam_pose: False
+#     verbose: True

@@ -95,25 +95,6 @@ def angleBtwnRotatMats(R1, R2):
     return np.arccos(inside_arccos)*180/np.pi
 
 
-# def rotatMatBtwnVecs(vec1, vec2):
-#     '''
-#     Find the rotation matrix that aligns vec1 to vec2.
-    
-#     Input:
-#         vec1, vec2: [1x3], two vectors
-#     Output:
-#         plane_norm: [1x3], norm vector of the plane.
-#     '''
-#     a = (vec1 / np.linalg.norm(vec1)).reshape(3)
-#     b = (vec2 / np.linalg.norm(vec2)).reshape(3)
-#     v = np.cross(a, b)
-#     c = np.dot(a, b)
-#     s = np.linalg.norm(v)
-#     kmat = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
-#     rotation_matrix = np.eye(3) + kmat + kmat.dot(kmat) * ((1 - c) / (s ** 2))
-#     return rotation_matrix
-
-
 def solveAbsCamPose(Pts, pts, K, D=None):
     '''
     Solve absolute camera pose using PnP.
@@ -124,70 +105,3 @@ def solveAbsCamPose(Pts, pts, K, D=None):
     R, _ = cv2.Rodrigues(rvec)
     M = np.concatenate((R, tvec), axis=1)
     return M
-
-
-# def solveRelCamPose(M2_list, ref_cam_id):
-#     '''
-#     Solve relative camera pose.
-#     '''
-#     assert 0 <= ref_cam_id < len(M2_list)
-#     M2_list = [np.array(M) for M in M2_list]
-#     M10 = M2_list[ref_cam_id]
-#     M01 = invertExtrinMat(M10)
-#     M2s_rel = []
-#     for M20 in M2_list:
-#         M21 = transmitExtrinMats(M20, M01)
-#         M2s_rel.append(M21)
-#     return M2s_rel
-
-
-# def rotate3DPtsAroundX(Pts, theta_X):
-#     '''
-#     Rotate 3D points around 'x-axis' for theta degree.
-#     '''
-#     theta_X_ = copy.deepcopy(theta_X) / 180. * np.pi
-#     Rx = np.array([[1,                 0,                 0],
-#                    [0,  np.cos(theta_X_), -np.sin(theta_X_)],
-#                    [0,  np.sin(theta_X_),  np.cos(theta_X_)]])
-#     return Rx.dot(Pts.copy())
-
-
-# def rotate3DPtsAroundY(Pts, theta_Y):
-#     '''
-#     Rotate 3D points around 'y-axis' for theta degree.
-#     '''
-#     theta_Y_ = copy.deepcopy(theta_Y) / 180. * np.pi
-#     Ry = np.array([[ np.cos(theta_Y_),  0,  np.sin(theta_Y_)],
-#                    [               0,   1,                 0],
-#                    [-np.sin(theta_Y_),  0,  np.cos(theta_Y_)]])
-#     return Ry.dot(Pts.copy())
-
-
-# def rotate3DPtsAroundZ(Pts, theta_Z):
-#     '''
-#     Rotate 3D points around 'z-axis' for theta degree.
-#     '''
-#     theta_Z_ = copy.deepcopy(theta_Z) / 180. * np.pi
-#     Rz = np.array([[np.cos(theta_Z_), -np.sin(theta_Z_),  0],
-#                    [np.sin(theta_Z_),  np.cos(theta_Z_),  0],
-#                    [            0,                    0,  1]])
-#     return Rz.dot(Pts.copy())
-
-
-# def fitPlaneFrom3DPts(Pts):
-#     '''
-#     Fit a plane from 3D points.
-    
-#     Input:
-#         Pts: [Nx3], 3D points
-#     Output:
-#         plane_norm: [1x3], norm vector of the plane.
-#     '''
-#     assert Pts.shape[1] == 3
-#     n_pts = Pts.shape[0]
-#     A = np.concatenate([Pts[:, :2], np.ones((n_pts, 1))], axis=1)
-#     b = Pts[:, 2]
-#     x, residuals, rank, s = np.linalg.lstsq(A, b, rcond=None)
-#     plane_norm = np.array([x[0], x[1], -1])
-#     plane_norm /= np.linalg.norm(plane_norm)
-#     return plane_norm

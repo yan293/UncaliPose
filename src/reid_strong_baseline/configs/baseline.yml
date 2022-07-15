@@ -1,6 +1,6 @@
 MODEL:
   PRETRAIN_CHOICE: 'imagenet'
-  PRETRAIN_PATH: '/home/yan/experiments/3d_human_pose_estimation/reid-strong-baseline/pretrained/market_resnet50_model_120_rank1_945.pth'
+  PRETRAIN_PATH: '../pretrained/market_resnet50_model_120_rank1_945.pth'
   LAST_STRIDE: 2
   NECK: 'no'
   METRIC_LOSS_TYPE: 'triplet'
@@ -62,6 +62,6 @@ TEST:
   NECK_FEAT: 'after'
   FEAT_NORM: 'yes'
 
-OUTPUT_DIR: "/home/yan/experiments/3d_human_pose_estimation/reid-strong-baseline/output"
+OUTPUT_DIR: "../output"
 
 

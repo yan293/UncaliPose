@@ -1,5 +1,5 @@
 MODEL:
-  PRETRAIN_PATH: '/home/yan/experiments/3d_human_pose_estimation/reid-strong-baseline/pretrained/market_resnet50_model_120_rank1_945.pth'
+  PRETRAIN_PATH: '../pretrained/market_resnet50_model_120_rank1_945.pth'
 
 
 INPUT:
@@ -39,6 +39,6 @@ SOLVER:
 TEST:
   IMS_PER_BATCH: 128
 
-OUTPUT_DIR: "/home/yan/experiments/3d_human_pose_estimation/reid-strong-baseline/output"
+OUTPUT_DIR: "../output"
 
 

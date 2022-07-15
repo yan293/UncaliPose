@@ -10,7 +10,6 @@ import sys
 sys.path.append('./..')
 from .. import basic_3d_operations as b3dops
 from .. import box_processing as bp
-from .. import box_clustering as bc
 from .. import tracking as tk
 from collections import defaultdict
 from scipy import io
@@ -27,7 +26,7 @@ import os
 
 class Shelf(object):
     
-    def __init__(self, data_dir):
+    def __init__(self, data_dir, config=None):
         if data_dir[-1] == '/': data_dir = data_dir[:-1]
         self.data_name = data_dir.split('/')[-1]
         self.data_dir = data_dir
@@ -46,6 +45,8 @@ class Shelf(object):
         self.body_edges = np.array(
             [[2,8],[3,9],[2,3],[12,13],[0,1],[1,2],[3,4],
              [4,5],[6,7],[7,8],[8,12],[9,10],[10,11],[9,12]])
+        
+        self.config = config
 
     def _loadCalibrationParameters(self):
         '''
@@ -198,19 +199,24 @@ class Shelf(object):
                 joints_dict[cam_name] = {}
         return joints_dict
     
-    def getSingleFrameMultiViewBoxes(self, frame_id,
-                                      box_joints_margin=1.2,
-                                      box_ios_thold=0.7,
-                                      box_size_thold=(20, 20),
-                                      joints_inside_img_ratio=0.6,
-                                      box_inside_img_ratio=0.6,
-                                      img_postfix='.jpg',
-                                      verbose=True,
-                                      resize=(128, 256),
-                                      replace_old=False):
+    def getSingleFrameMultiViewBoxes(
+            self, frame_id, box_joints_margin=1.2, box_ios_thold=0.7,
+            box_size_thold=(20, 20),joints_inside_img_ratio=0.6,
+            box_inside_img_ratio=0.6, img_postfix='.jpg', verbose=True,
+            resize=(128, 256), replace_old=False):
         '''
         Crop the bounding boxes from myltiple views for a video frame.
         '''
+        if self.config is not None:
+            box_config = self.config['boxprocessing']
+            joints_inside_img_ratio = box_config['joints_inside_img_ratio']
+            box_inside_img_ratio = box_config['box_inside_img_ratio']
+            box_joints_margin = box_config['box_joints_margin']
+            box_size_thold = box_config['box_size_thold']
+            box_ios_thold = box_config['box_ios_thold']
+            replace_old = box_config['replace_old']
+            resize = box_config['resize']
+            
         time_start = time.time()
         save_crop_dir = os.path.join(
             self.boxcrop_dir, 'frame' + str(frame_id).zfill(8))
@@ -292,12 +298,18 @@ class Shelf(object):
         '''
         Get the bounding box ReID features of a given frame.
         '''
+        if self.config is not None:
+            reid_config = self.config['reid']
+            num_prev_frames = reid_config['num_prev_frames']
+            trk_feat_method = reid_config['trk_feat_method']
+            trking_method = reid_config['trking_method']
+            
         # --- current frame reid feature
         frame_box_dir = os.path.join(
             self.boxcrop_dir,'frame'+str(frame_id).zfill(8))
         reid_feat_file = os.path.join(frame_box_dir, 'box_reid_feat.pkl')
         if not os.path.exists(reid_feat_file):
-            bc.extractBoxReIDFeature(
+            bp.extractBoxReIDFeature(
                 frame_box_dir, reid_model=reid_model, log_file=reid_log_file)
             # time.sleep(10)
         if not os.path.exists(reid_feat_file):
@@ -327,11 +339,15 @@ class Shelf(object):
 
         return reid_feat
     
-    def genPtsCorrepFromBoxClus(self, boxfile_clusters, verbose=True,
-                                noise_sz=None):
+    def genPtsCorrepFromBoxClus(
+            self, boxfile_clusters, verbose=True, noise_sz=None):
         '''
         Get 2D-2D point correspondences from box crop files clusters.
         '''
+        if self.config is not None:
+            correp_config = self.config['correspondence']
+            noise_sz = correp_config['noise_sz']
+        
         if verbose:
             print("\nGet 2D-2D correspondences:\n====================")
             
