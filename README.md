@@ -9,7 +9,7 @@ If our work is helpful to your research, please consider citing:
 ```
 
 <p align="left">
-    <img src="./figure/system_overview.png" alt="system overview"  width="700">
+    <img src="./figure/system_overview.png" alt="system overview"  width="800">
 </p>
 
 
