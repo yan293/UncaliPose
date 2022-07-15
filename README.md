@@ -46,5 +46,5 @@ We use IPython as the entrance of the code for the consideration of readability.
 ### Quantitative Evaluation on Open Datasets
 
 <p align="left">
-    <img src="./figure/3d_pose_estimation_table.png" alt="3d human pose estimation table"  width="450">
+    <img src="./figure/3d_pose_est_table.png" alt="3d human pose estimation table"  width="450">
 </p>
