@@ -1,8 +1,8 @@
 # UncalibratedMVMPWithTracking
 
-This is the official implementation of our paper **"A Multi-Step Clustering Approach For Human Matching Across Multiple Views"**.
+This is the official implementation of our paper **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.
 
-If our work is useful to your research, please consider citing:
+If our work is helpful to your research, please consider citing:
 
 ```
   TO COME...
@@ -35,20 +35,16 @@ We have pre-processed the open Campus and Shelf datasets to the required format.
 
 We use IPython as the entrance of the code for the consideration of readability.  Simply run the Ipython files would work.  If Ipython is not the preference, copying the contents of the Ipython files into self-defined python files would also work.
 
-## Result Showcase
+## Result
 
-### Cross-View Human Matching on CMU Panoptic dataset
+### 3D Pose Estimation and 2D Pose Reprojection Visualization
 
 <p align="left">
-    <img src="./figure/clustering_figure.png" alt="human matching figure"  width="450">
+    <img src="./figure/3d_pose_est_figure.png" alt="3d human pose estimation figure"  width="450">
 </p>
 
-<p align="left">
-    <img src="./figure/clustering_table.png" alt="human matching table"  width="450">
-</p>
-
-### Multi-View Multi-Person 3D Human Pose Estimation
+### Quantitative Evaluation on Open Datasets
 
 <p align="left">
-    <img src="./figure/3d_pose_estimation_table.png" alt="3d human pose estimation"  width="450">
+    <img src="./figure/3d_pose_estimation_table.png" alt="3d human pose estimation table"  width="450">
 </p>
