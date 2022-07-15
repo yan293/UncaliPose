@@ -40,11 +40,11 @@ We use IPython as the entrance of the code for the consideration of readability.
 ### 3D Pose Estimation and 2D Pose Reprojection Visualization
 
 <p align="left">
-    <img src="./figure/3d_pose_est_figure.png" alt="3d human pose estimation figure"  width="450">
+    <img src="./figure/3d_pose_est_figure.png" alt="3d human pose estimation figure"  width="550">
 </p>
 
 ### Quantitative Evaluation on Open Datasets
 
 <p align="left">
-    <img src="./figure/3d_pose_est_table.png" alt="3d human pose estimation table"  width="450">
+    <img src="./figure/3d_pose_est_table.png" alt="3d human pose estimation table"  width="500">
 </p>
