@@ -12,7 +12,7 @@ boxprocessing:
 
 # ReID feature parameters
 reid:
-    num_prev_frames: 10
+    num_prev_frames: 0
     trking_method: 'person_id'
     trk_feat_method: 'max_with_sign_voting'
 

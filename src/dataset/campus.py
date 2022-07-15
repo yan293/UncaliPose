@@ -10,7 +10,6 @@ import sys
 sys.path.append('./..')
 from .. import basic_3d_operations as b3dops
 from .. import box_processing as bp
-from .. import tracking as tk
 from collections import defaultdict
 from scipy import io
 import pickle as pkl
@@ -368,26 +367,6 @@ class Campus(object):
             print('Re-ID feature file not found!')
             return None
         reid_feat = pkl.load(open(reid_feat_file, 'rb'))
-        
-        # --- previous frames reid feature
-        if num_prev_frames > 0:
-            box_feats = [reid_feat]
-            for i in range(num_prev_frames):
-                frame_prev_id = frame_id - (i + 1)
-                prev_reid_feat_file = os.path.join(
-                    self.boxcrop_dir,'frame'+str(frame_prev_id).zfill(8),
-                    'box_reid_feat.pkl')
-                if not os.path.exists(prev_reid_feat_file):
-                    continue
-                prev_reid_feat = pkl.load(open(prev_reid_feat_file,'rb'))
-                box_feats.append(prev_reid_feat)
-            
-            # tracking and track feature representation
-            track_box_feats = tk.singleViewTracking(
-                box_feats, method=trking_method, verbose=False)
-            track_feat = tk.getTrackFeat(
-                track_box_feats, method=trk_feat_method)
-            reid_feat = track_feat
 
         return reid_feat
     

@@ -1,4 +1,4 @@
-# UncalibratedMVMPWithTracking
+# UncalibratedMVMP
 
 This is the official implementation of our paper **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.
 
