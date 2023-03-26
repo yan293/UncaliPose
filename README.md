@@ -5,7 +5,14 @@ This is the official implementation of our paper **"Multi-View Multi-Person 3D P
 If our work is helpful to your research, please consider citing:
 
 ```
-  TO COME...
+@inproceedings{Xu_2022_BMVC,
+author    = {Yan Xu and Kris Kitani},
+title     = {Multi-View Multi-Person 3D Pose Estimation with Uncalibrated Camera Networks},
+booktitle = {33rd British Machine Vision Conference 2022, {BMVC} 2022, London, UK, November 21-24, 2022},
+publisher = {{BMVA} Press},
+year      = {2022},
+url       = {https://bmvc2022.mpi-inf.mpg.de/0132.pdf}
+}
 ```
 
 <p align="left">
