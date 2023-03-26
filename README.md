@@ -2,6 +2,12 @@
 
 This is the official implementation of **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.
 
+## System overview:
+
+<p align="left">
+    <img src="./figure/system_overview.png" alt="system overview"  width="800">
+</p>
+
 If you think our work is helpful, please consider citing:
 
 ```
@@ -14,11 +20,6 @@ year      = {2022},
 url       = {https://bmvc2022.mpi-inf.mpg.de/0132.pdf}
 }
 ```
-
-<p align="left">
-    <img src="./figure/system_overview.png" alt="system overview"  width="800">
-</p>
-
 
 
 ## Configure Environment
@@ -56,8 +57,8 @@ We use IPython as the entrance of the code for the consideration of readability.
     <img src="./figure/camera_pose_estimation.png" alt="3d human pose estimation table"  width="500">
 </p>
 
-### Multi-view 3D human pose pstimation with one moving camera mounted on a flying drone
+<!-- ### Multi-view 3D human pose pstimation with one moving camera mounted on a flying drone
 
 <p align="left">
     <img src="./figure/drone_pose_estimation.png" alt="3d human pose estimation table"  width="500">
-</p>
+</p> -->
