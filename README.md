@@ -1,8 +1,8 @@
 # UncalibratedMVMP
 
-This is the official implementation of our paper **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.
+This is the official implementation of **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.
 
-If our work is helpful to your research, please consider citing:
+If you think our work is helpful, please consider citing:
 
 ```
 @inproceedings{Xu_2022_BMVC,
@@ -44,14 +44,20 @@ We use IPython as the entrance of the code for the consideration of readability.
 
 ## Result
 
-### 3D Pose Estimation and 2D Pose Reprojection Visualization
+### Multi-view 3D human pose pstimation without knowing the camera poses
 
 <p align="left">
-    <img src="./figure/3d_pose_est_figure.png" alt="3d human pose estimation figure"  width="550">
+    <img src="./figure/human_pose_estimation.png" alt="3d human pose estimation figure"  width="550">
 </p>
 
-### Quantitative Evaluation on Open Datasets
+### Camera pose estimation
 
 <p align="left">
-    <img src="./figure/3d_pose_est_table.png" alt="3d human pose estimation table"  width="500">
+    <img src="./figure/camera_pose_estimation.png" alt="3d human pose estimation table"  width="500">
+</p>
+
+### Multi-view 3D human pose pstimation with one moving camera mounted on a flying drone
+
+<p align="left">
+    <img src="./figure/drone_pose_estimation.png" alt="3d human pose estimation table"  width="500">
 </p>
