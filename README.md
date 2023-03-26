@@ -14,7 +14,7 @@ Given multi-view images, (a) we first detect 2D poses and solve cross-view human
 
 ### Environment configuration
 
-We used anaconda to configure the Python environment.  To configure the environment, run the following command:
+To configure the environment, simply run the following command:
 ```
   pip install -r requirements.txt
 ```
@@ -22,7 +22,7 @@ We used anaconda to configure the Python environment.  To configure the environm
 
 ### Downloading pre-processed data
 
-We have pre-processed the open Campus and Shelf datasets to the required format.  Please download the datasets at: 
+We have pre-processed the open Campus and Shelf datasets to the following required format.  The processed datasets can be downloaded at: 
 
 * [Processed Campus Data](https://drive.google.com/file/d/1YCh4GHY3vkwKpSZsnj6sx84cmwFN7XaP/view?usp=sharing)
 
@@ -31,7 +31,7 @@ We have pre-processed the open Campus and Shelf datasets to the required format.
 
 ### Running code
 
-We use IPython as the entrance of the code for the consideration of readability.  Simply run the Ipython files would work.  If Ipython is not the preference, copying the contents of the Ipython files into self-defined python files would also work.
+We use IPython as the entrance of the code for the consideration of readability.  Simply run the Ipython files would work.  If Ipython is not your preference, copying the contents of the Ipython files into self-defined python files should also work.
 
 ## Result demo
 
