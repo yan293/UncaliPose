@@ -1,14 +1,18 @@
-# UncalibratedMVMP
+# UncaliPose
 
 This is the official implementation of **"Multi-View Multi-Person 3D Pose Estimation with Unknown Camera Poses"**.
 
 ## System overview:
 
+Given multi-view images, (a) we first detect 2D poses and solve cross-view human matching as constrained optimization.  Then, (b) we estimate camera poses and perform self-validation.  Finally, (c) we solve 3D human poses, aggregate multi-view information, and further optimize through (d) Bundle Adjustment.
+
 <p align="left">
     <img src="./figure/system_overview.png" alt="system overview"  width="800">
 </p>
 
-## Configure Environment
+## Usage of code and data
+
+### Environment configuration
 
 We used anaconda to configure the Python environment.  To configure the environment, run the following command:
 ```
@@ -16,7 +20,7 @@ We used anaconda to configure the Python environment.  To configure the environm
 ```
 
 
-## Download Data
+### Downloading pre-processed data
 
 We have pre-processed the open Campus and Shelf datasets to the required format.  Please download the datasets at: 
 
@@ -25,11 +29,11 @@ We have pre-processed the open Campus and Shelf datasets to the required format.
 * [Processed Shelf Data](https://drive.google.com/file/d/1_Y9x0L7PF8ll92CySbpSsKXaXpEurnLx/view?usp=sharing).
 
 
-## Use Code
+### Running code
 
 We use IPython as the entrance of the code for the consideration of readability.  Simply run the Ipython files would work.  If Ipython is not the preference, copying the contents of the Ipython files into self-defined python files would also work.
 
-## Result
+## Result demo
 
 ### Multi-view 3D human pose pstimation without knowing the camera poses
 
